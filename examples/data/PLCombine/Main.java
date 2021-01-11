@@ -13,6 +13,8 @@ public class Main {
 
   public static final String rapCaviarID = "37i9dQZF1DX0XUsuxWHRQd";
   public static final String mostNecessaryID = "37i9dQZF1DX2RxBh64BHjQ";
+  public static final String jackID = "1pFX4j1JdA1zfwrehY9y4m";
+  public static final String grayID = "6T8maOrjE6hW0vwlcVuZkp";
 
   public static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
     .setClientId(clientId)

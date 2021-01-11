@@ -1,10 +1,8 @@
 package data.PLCombine;
 
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import com.wrapper.spotify.model_objects.specification.Album;
-import com.wrapper.spotify.model_objects.specification.Paging;
-import com.wrapper.spotify.model_objects.specification.Playlist;
-import com.wrapper.spotify.model_objects.specification.TrackSimplified;
+import com.wrapper.spotify.model_objects.IPlaylistItem;
+import com.wrapper.spotify.model_objects.specification.*;
 import com.wrapper.spotify.requests.data.albums.GetAlbumRequest;
 import com.wrapper.spotify.requests.data.playlists.GetPlaylistRequest;
 import org.apache.hc.core5.http.ParseException;
@@ -16,21 +14,56 @@ import static data.PLCombine.Main.*;
 
 public class compareTwoPL {
 
-  private static final GetPlaylistRequest getPlaylistRequest = spotifyApi.getPlaylist(rapCaviarID)
+  private static final GetPlaylistRequest getPlaylistRequestOne = spotifyApi.getPlaylist(jackID)
 //          .fields("description")
 //          .market(CountryCode.SE)
 //          .additionalTypes("track,episode")
     .build();
 
-  private static final GetPlaylistRequest gPLR = spotifyApi.getPlaylist(mostNecessaryID)
+  private static final GetPlaylistRequest getPlaylistRequestTwo = spotifyApi.getPlaylist(grayID)
     .build();
 
 
   public static void getPlaylist_Sync() {
     try {
-      final Playlist playlist = gPLR.execute();
+      final Playlist rapCaviar = getPlaylistRequestOne.execute();
+      final Playlist mostNecessary = getPlaylistRequestTwo.execute();
 
-      System.out.println("Name: " + playlist.getName());
+      Paging<PlaylistTrack> rapCaviarPager = rapCaviar.getTracks();
+      PlaylistTrack[] rapCaviarPLTracks = rapCaviarPager.getItems();
+      IPlaylistItem[] RCTracks = new IPlaylistItem[rapCaviarPLTracks.length];
+      for (int i = 0; i < RCTracks.length; i += 1) {
+        RCTracks[i] = rapCaviarPLTracks[i].getTrack();
+      }
+
+      System.out.println(rapCaviarPLTracks.length);
+
+      Paging<PlaylistTrack> mostNecessaryPager = mostNecessary.getTracks();
+      PlaylistTrack[] mostNecessaryPLTracks = mostNecessaryPager.getItems();
+      IPlaylistItem[] MNTracks = new IPlaylistItem[mostNecessaryPLTracks.length];
+      for (int i = 0; i < MNTracks.length; i += 1) {
+        MNTracks[i] = mostNecessaryPLTracks[i].getTrack();
+      }
+
+      System.out.println(MNTracks.length);
+
+      for (IPlaylistItem t : RCTracks) {
+        if (t == null) {
+          continue;
+        } else{
+          for (IPlaylistItem t2 : MNTracks) {
+            if (t2 == null) {
+              continue;
+            } else {
+              if (t.getName().equals(t2.getName())) {
+                System.out.println(t.getName());
+                break;
+              }
+            }
+          }
+        }
+      }
+
     } catch (IOException | SpotifyWebApiException | ParseException e) {
       System.out.println("Error: " + e.getMessage());
     }
