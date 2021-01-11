@@ -6,7 +6,8 @@ import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
 
-import static data.Jack.firstExample.spotifyApi;
+import static data.PLCombine.Main.spotifyApi;
+
 
 public class ClientCredentials {
 
@@ -21,6 +22,7 @@ public class ClientCredentials {
       spotifyApi.setAccessToken(clientCredentials.getAccessToken());
 
       System.out.println("Expires in: " + clientCredentials.getExpiresIn());
+      System.out.println(spotifyApi.getAccessToken());
     } catch (IOException | SpotifyWebApiException | ParseException e) {
       System.out.println("Error: " + e.getMessage());
     }

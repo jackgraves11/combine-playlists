@@ -22,7 +22,6 @@ public class Main {
 
   public static void main(String[] args) {
     ClientCredentials.clientCredentials_Sync();
-    compareTwoPL compareTwoPlaylist = new compareTwoPL(rapCaviarID, mostNecessaryID);
-    compareTwoPlaylist.start();
+    compareTwoPL.getPlaylist_Sync();
   }
 }
