@@ -2,8 +2,10 @@ package data.PLCombine;
 
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
+import com.wrapper.spotify.model_objects.specification.Track;
 
 import java.net.URI;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -24,6 +26,8 @@ public class Main {
 
   public static void main(String[] args) {
     ClientCredentials.clientCredentials_Sync();
-    compareTwoPL.getPlaylist_Sync();
+    compareTwoPL PlaylistComparer = new compareTwoPL();
+    ArrayList<Track> sharedTracks = PlaylistComparer.getCombinedTracks(jackID, grayID);
+    PlaylistComparer.printTracks(sharedTracks);
   }
 }

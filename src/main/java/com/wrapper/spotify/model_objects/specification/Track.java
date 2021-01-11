@@ -279,6 +279,26 @@ public class Track extends AbstractModelObject implements IArtistTrackModelObjec
         + ", type=" + type + ", uri=" + uri + ")";
   }
 
+  /**
+   * @author Jack Graves
+   * Returns whether one Track instance is the same track as the otherTrack instance.
+   * Overriding it because it wasn't working when I tried to do equals(Track otherTrack).
+   * Could try to fix that later
+   * @param o track being compared
+   * @return whether they are the same track or not
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (!o.getClass().equals(this.getClass())) {
+      return false;
+    }
+    Track otherTrack = (Track) o;
+    if (this.getId() == null || otherTrack.getId() == null) {
+      return false;
+    }
+    return (this.getId().equals(otherTrack.getId()));
+  }
+
   @Override
   public Builder builder() {
     return new Builder();
