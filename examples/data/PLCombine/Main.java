@@ -26,6 +26,7 @@ public class Main {
   public static final String mostNecessaryID = "37i9dQZF1DX2RxBh64BHjQ";
   public static final String jackID = "1pFX4j1JdA1zfwrehY9y4m";
   public static final String grayID = "6T8maOrjE6hW0vwlcVuZkp";
+  public static final String avaID = "5VFe1i2yoUMhlZ1G2SPqOM";
 
   /**
    * Spotify API that holds clientIDs and redirect URI. Used to access the spotify API.
@@ -39,7 +40,7 @@ public class Main {
   public static void main(String[] args) {
     ClientCredentials.clientCredentials_Sync();
     compareTwoPL PlaylistComparer = new compareTwoPL();
-    ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(jackID, grayID);
+    ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(jackID, avaID);
     PlaylistComparer.printTracks(sharedTracks);
   }
 }

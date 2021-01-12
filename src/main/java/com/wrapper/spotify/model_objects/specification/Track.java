@@ -282,8 +282,11 @@ public class Track extends AbstractModelObject implements IArtistTrackModelObjec
   /**
    * @author Jack Graves
    * Returns whether one Track instance is the same track as the otherTrack instance.
-   * Overriding it because it wasn't working when I tried to do equals(Track otherTrack).
-   * Could try to fix that later
+   * Conditions for whether a track is equal to another one:
+   * Track Ids are equal
+   * Track names are equal and track albums are equal
+   * Track names are equal and same artists are on the tracks
+   * TODO account for young thug power dilemma
    * @param o track being compared
    * @return whether they are the same track or not
    */
@@ -296,7 +299,29 @@ public class Track extends AbstractModelObject implements IArtistTrackModelObjec
     if (this.getId() == null || otherTrack.getId() == null) {
       return false;
     }
-    return (this.getId().equals(otherTrack.getId()));
+    if (this.getId().equals(otherTrack.getId())) {
+      return true;
+    } else if (this.getName().equals(otherTrack.getName())) {
+      if (this.getAlbum().getName().equals(otherTrack.getAlbum().getName())) {
+        return true;
+      } else if (this.getArtists().length == otherTrack.getArtists().length) {
+        ArtistSimplified[] trackOneArtists = this.getArtists();
+        ArtistSimplified[] trackTwoArtists = otherTrack.getArtists();
+        for (ArtistSimplified artist : trackOneArtists) {
+          boolean otherTrackContainsArtist = false;
+          for (int i = 0; i < getArtists().length; i += 1) {
+            if (artist.equals(trackTwoArtists[i])) {
+              otherTrackContainsArtist = true;
+            }
+          }
+          if (otherTrackContainsArtist == false) {
+            return false;
+          }
+        }
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override

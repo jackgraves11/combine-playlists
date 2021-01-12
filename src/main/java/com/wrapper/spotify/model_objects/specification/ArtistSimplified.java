@@ -30,6 +30,24 @@ public class ArtistSimplified extends AbstractModelObject {
   }
 
   /**
+   * @author Jack Graves
+   * Uses whether the ID's are the same to determine whether the Artists are the same.
+   * @param o other Artist being compared
+   * @return Whether the two artists are the same.
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (!o.getClass().equals(this.getClass())) {
+      return false;
+    }
+    ArtistSimplified otherArtist = (ArtistSimplified) o;
+    if (this.getId() == null || otherArtist.getId() == null) {
+      return false;
+    }
+    return this.getId().equals(otherArtist.getId());
+  }
+
+  /**
    * Get the external URLs of the artist. <br>
    * Example: <a href="https://developer.spotify.com/web-api/user-guide/#spotify-uris-and-ids">Spotify-URL</a>
    *

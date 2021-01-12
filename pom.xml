@@ -99,6 +99,12 @@
       <version>1.7.30</version>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
+          <version>RELEASE</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 
   <packaging>jar</packaging>
