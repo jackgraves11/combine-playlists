@@ -4,7 +4,14 @@ import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.model_objects.specification.Track;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 /**
@@ -37,10 +44,13 @@ public class Main {
     .setRedirectUri(redirectUri)
     .build();
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
+    //UserAuthorization.authorizeUser();
     ClientCredentials.clientCredentials_Sync();
     compareTwoPL PlaylistComparer = new compareTwoPL();
-    ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(jackID, avaID);
-    PlaylistComparer.printTracks(sharedTracks);
+    ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(jackID, jackID);
+    PlaylistArtistsAnalyzer pAA = new PlaylistArtistsAnalyzer(sharedTracks);
+    pAA.topArtists();
+    //PlaylistComparer.printTracks(sharedTracks);
   }
 }

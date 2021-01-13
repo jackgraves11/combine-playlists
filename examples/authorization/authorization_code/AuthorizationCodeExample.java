@@ -24,6 +24,7 @@ public class AuthorizationCodeExample {
     .setClientSecret(clientSecret)
     .setRedirectUri(redirectUri)
     .build();
+
   private static final AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code)
     .build();
 
