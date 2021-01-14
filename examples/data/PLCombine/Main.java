@@ -8,10 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.util.ArrayList;
 
 /**
@@ -44,13 +41,16 @@ public class Main {
     .setRedirectUri(redirectUri)
     .build();
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
     //UserAuthorization.authorizeUser();
     ClientCredentials.clientCredentials_Sync();
     compareTwoPL PlaylistComparer = new compareTwoPL();
-    ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(jackID, jackID);
+    ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(jackID, grayID);
     PlaylistArtistsAnalyzer pAA = new PlaylistArtistsAnalyzer(sharedTracks);
-    pAA.topArtists();
+    PlaylistArtistsAnalyzer.SimpleArtistFreqNode[] topArtists = pAA.topArtists();
+    pAA.printArtistsTracks(topArtists[0].getArtist());
+    //Waiter waiter = new Waiter();
+    //waiter.main();
     //PlaylistComparer.printTracks(sharedTracks);
   }
 }

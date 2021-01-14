@@ -12,26 +12,72 @@ public class PlaylistArtistsAnalyzer {
     this.playlist = playlist;
   }
 
-  public Map<String, Integer> topArtists() {
-    HashMap<String, Integer> result = new HashMap<>();
+  public class SimpleArtistFreqNode implements Comparable<SimpleArtistFreqNode> {
+    ArtistSimplified artist;
+    int frequency;
+
+    public SimpleArtistFreqNode(ArtistSimplified artist, int frequency) {
+      this.artist = artist;
+      this.frequency = frequency;
+    }
+
+    public ArtistSimplified getArtist() {
+      return artist;
+    }
+
+    public int getFrequency() {
+      return frequency;
+    }
+
+    public void setArtist(ArtistSimplified artist) {
+      this.artist = artist;
+    }
+
+    public void setFrequency(int frequency) {
+      this.frequency = frequency;
+    }
+
+    @Override
+    public int compareTo(SimpleArtistFreqNode o) {
+      return this.getFrequency() - o.getFrequency();
+    }
+  }
+
+  public SimpleArtistFreqNode[] topArtists() {
+    HashMap<ArtistSimplified, Integer> map = new HashMap<>();
     for (Track t : playlist) {
       ArtistSimplified[] artists = t.getArtists();
       for (ArtistSimplified artist : artists) {
-        if (result.containsKey(artist.getName())) {
-          result.put(artist.getName(), result.get(artist.getName()) + 1);
+        if (map.containsKey(artist)) {
+          map.put(artist, map.get(artist) + 1);
         } else {
-          result.put(artist.getName(), 1);
+          map.put(artist, 1);
         }
       }
     }
-    //printMap(result);
-    List<Map.Entry<String, Integer>> list = new ArrayList<>(result.entrySet());
-    list.sort(Map.Entry.comparingByValue());
-    for (int i = list.size() - 1; i >= 0; i -= 1) {
-      System.out.print(list.get(i).getKey() + ": ");
-      System.out.println(list.get(i).getValue());
+    SimpleArtistFreqNode[] result = new SimpleArtistFreqNode[map.size()];
+    int index = 0;
+    for (Map.Entry<ArtistSimplified, Integer> entry : map.entrySet()) {
+      result[index] = new SimpleArtistFreqNode(entry.getKey(), entry.getValue());
+      index += 1;
+    }
+    Arrays.sort(result, Collections.reverseOrder());
+    for (int i = 0; i < result.length; i += 1) {
+      System.out.print(result[i].getArtist().getName() + ": ");
+      System.out.println(result[i].getFrequency());
     }
     return result;
+  }
+
+  public void printArtistsTracks(ArtistSimplified artist) {
+    for (Track track : playlist) {
+      ArtistSimplified[] artists = track.getArtists();
+      for (ArtistSimplified currArtist : artists) {
+        if (currArtist.equals(artist)) {
+          System.out.println(track.getName());
+        }
+      }
+    }
   }
 
   private void printMap(Map<String, Integer> map) {

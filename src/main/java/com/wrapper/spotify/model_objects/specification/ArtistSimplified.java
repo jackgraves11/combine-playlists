@@ -48,6 +48,15 @@ public class ArtistSimplified extends AbstractModelObject {
   }
 
   /**
+   * @author Jack Graves
+   * Must base hash code of artist id to prevent errors in hashtables/maps
+   */
+  @Override
+  public int hashCode() {
+    return this.getId().hashCode();
+  }
+
+  /**
    * Get the external URLs of the artist. <br>
    * Example: <a href="https://developer.spotify.com/web-api/user-guide/#spotify-uris-and-ids">Spotify-URL</a>
    *
