@@ -25,12 +25,16 @@ public class Main {
   /** Where the website would redirect to (essentially website homepage) */
   public static final URI redirectUri = SpotifyHttpManager.makeUri("https://example.com/spotify-redirect");
 
+  public static final SharedMethods sharedMethods = new SharedMethods();
+
   /** Playlist IDs: */
   public static final String rapCaviarID = "37i9dQZF1DX0XUsuxWHRQd";
   public static final String mostNecessaryID = "37i9dQZF1DX2RxBh64BHjQ";
   public static final String jackID = "1pFX4j1JdA1zfwrehY9y4m";
   public static final String grayID = "6T8maOrjE6hW0vwlcVuZkp";
   public static final String avaID = "5VFe1i2yoUMhlZ1G2SPqOM";
+  public static final String testPL1ID = "0j1AolmgBCVpc8JUgAkQ1o";
+  public static final String testPL2ID = "2NUfUmvH4j0UgQytZCiaGA";
 
   /**
    * Spotify API that holds clientIDs and redirect URI. Used to access the spotify API.
@@ -45,10 +49,20 @@ public class Main {
     //UserAuthorization.authorizeUser();
     ClientCredentials.clientCredentials_Sync();
     compareTwoPL PlaylistComparer = new compareTwoPL();
+    /**
     ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(jackID, grayID);
     PlaylistArtistsAnalyzer pAA = new PlaylistArtistsAnalyzer(sharedTracks);
     PlaylistArtistsAnalyzer.SimpleArtistFreqNode[] topArtists = pAA.topArtists();
     pAA.printArtistsTracks(topArtists[0].getArtist());
+     */
+    ArrayList<Track> jackTracks = PlaylistComparer.getSharedTracks(jackID, jackID);
+    ArrayList<Track> grayTracks = PlaylistComparer.getSharedTracks(grayID, grayID);
+    ArtistRanker artistRanker = new ArtistRanker();
+    ArrayList<ArtistRanker.SimpleArtistScoreNode> scores = artistRanker.artistRanks(jackTracks, grayTracks);
+    for (ArtistRanker.SimpleArtistScoreNode node : scores) {
+      System.out.print(node.getArtist().getName() + ": ");
+      System.out.println(node.getScore());
+    }
     //Waiter waiter = new Waiter();
     //waiter.main();
     //PlaylistComparer.printTracks(sharedTracks);
