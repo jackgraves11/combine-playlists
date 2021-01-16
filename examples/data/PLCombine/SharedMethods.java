@@ -14,7 +14,7 @@ import static data.PLCombine.Main.spotifyApi;
 
 public class SharedMethods {
 
-  public ArrayList<Track> getPLTracks(String pLID) {
+  public static ArrayList<Track> getPLTracks(String pLID) {
     return getPlayListTracks(pLID);
   }
 
@@ -26,7 +26,7 @@ public class SharedMethods {
    *               offset = 350: gets tracks 350-400.
    * @return A GetPlaylistItemsRequest object that gets the items of a playlist when you call execute() on it.
    */
-  private GetPlaylistsItemsRequest initializePLItemsRequest(String pLID, int offset) {
+  private static GetPlaylistsItemsRequest initializePLItemsRequest(String pLID, int offset) {
     return spotifyApi.getPlaylistsItems(pLID)
       .offset(offset)
       .build();
@@ -38,7 +38,7 @@ public class SharedMethods {
    * @param pLID Playlist ID
    * @return ArrayList of all the tracks in the inputted playlist.
    */
-  private ArrayList<Track> getPlayListTracks(String pLID) {
+  private static ArrayList<Track> getPlayListTracks(String pLID) {
     int offset = 0;
     int plLength = 0;
     ArrayList<Track> allTracks = new ArrayList<>();
@@ -48,7 +48,10 @@ public class SharedMethods {
         Paging<PlaylistTrack> playlistPager = pLRequest.execute();
         PlaylistTrack[] pLTracks = playlistPager.getItems();
         for (PlaylistTrack pLTrack : pLTracks) {
-          allTracks.add((Track) pLTrack.getTrack()); //Check Cast
+          Track currentTrack = (Track) pLTrack.getTrack();
+          if (currentTrack != null && currentTrack.getId() != null) {
+            allTracks.add((Track) pLTrack.getTrack()); //Check Cast
+          }
         }
         plLength = playlistPager.getTotal();
         offset = offset + 100;

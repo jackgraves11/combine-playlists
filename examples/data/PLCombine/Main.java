@@ -10,6 +10,9 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Set;
+
+import static data.PLCombine.SharedMethods.getPLTracks;
 
 /**
  * Class where general info and instances are stored and where the method calls start.
@@ -54,14 +57,19 @@ public class Main {
     PlaylistArtistsAnalyzer pAA = new PlaylistArtistsAnalyzer(sharedTracks);
     PlaylistArtistsAnalyzer.SimpleArtistFreqNode[] topArtists = pAA.topArtists();
     pAA.printArtistsTracks(topArtists[0].getArtist());
-     */
-    ArrayList<Track> jackTracks = PlaylistComparer.getSharedTracks(jackID, jackID);
-    ArrayList<Track> grayTracks = PlaylistComparer.getSharedTracks(grayID, grayID);
+    ArrayList<Track> jackPL = getPLTracks(jackID);
+    ArrayList<Track> grayPL = getPLTracks(grayID);
     ArtistRanker artistRanker = new ArtistRanker();
-    ArrayList<ArtistRanker.SimpleArtistScoreNode> scores = artistRanker.artistRanks(jackTracks, grayTracks);
+    ArrayList<ArtistRanker.SimpleArtistScoreNode> scores = artistRanker.artistRanks(jackPL, grayPL);
     for (ArtistRanker.SimpleArtistScoreNode node : scores) {
       System.out.print(node.getArtist().getName() + ": ");
       System.out.println(node.getScore());
+    }
+     */
+    CreatePlaylist createPlaylist = new CreatePlaylist();
+    Set<Track> playlist = createPlaylist.getPlaylist(jackID, grayID, 200);
+    for (Track track : playlist) {
+      System.out.println(track.getName());
     }
     //Waiter waiter = new Waiter();
     //waiter.main();

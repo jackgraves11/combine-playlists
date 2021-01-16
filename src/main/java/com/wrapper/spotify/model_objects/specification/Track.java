@@ -324,6 +324,15 @@ public class Track extends AbstractModelObject implements IArtistTrackModelObjec
     return false;
   }
 
+  /**
+   * @author Jack Graves
+   * Has to base hashCode off of ID.
+   */
+  @Override
+  public int hashCode() {
+    return this.getId().hashCode();
+  }
+
   @Override
   public Builder builder() {
     return new Builder();

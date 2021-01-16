@@ -10,26 +10,34 @@ public class ArtistRanker {
   public ArrayList<SimpleArtistScoreNode> artistRanks(ArrayList<Track> playlist1, ArrayList<Track> playlist2) {
     HashMap<ArtistSimplified, BuildingArtistRankNode> rankings = new HashMap<>();
     for (Track track : playlist1) {
-      ArtistSimplified[] artists = track.getArtists();
-      for (ArtistSimplified artist : artists) {
-        if (rankings.containsKey(artist)) {
-          BuildingArtistRankNode currNode = rankings.get(artist);
-          currNode.setNumAppearances(currNode.getNumAppearances() + 1);
-          currNode.addPlaylistContainingArtist(1);
-        } else {
-          rankings.put(artist, new BuildingArtistRankNode(artist, 1, 2));
+      if (track != null) {
+        ArtistSimplified[] artists = track.getArtists();
+        for (ArtistSimplified artist : artists) {
+          if (artist.getId() != null) {
+            if (rankings.containsKey(artist)) {
+              BuildingArtistRankNode currNode = rankings.get(artist);
+              currNode.setNumAppearances(currNode.getNumAppearances() + 1);
+              currNode.addPlaylistContainingArtist(1);
+            } else {
+              rankings.put(artist, new BuildingArtistRankNode(artist, 1, 2));
+            }
+          }
         }
       }
     }
     for (Track track : playlist2) {
-      ArtistSimplified[] artists = track.getArtists();
-      for (ArtistSimplified artist : artists) {
-        if (rankings.containsKey(artist)) {
-          BuildingArtistRankNode currNode = rankings.get(artist);
-          currNode.setNumAppearances(currNode.getNumAppearances() + 1);
-          currNode.addPlaylistContainingArtist(2);
-        } else {
-          rankings.put(artist, new BuildingArtistRankNode(artist, 2, 2));
+      if (track != null) {
+        ArtistSimplified[] artists = track.getArtists();
+        for (ArtistSimplified artist : artists) {
+          if (artist.getId() != null) {
+            if (rankings.containsKey(artist)) {
+              BuildingArtistRankNode currNode = rankings.get(artist);
+              currNode.setNumAppearances(currNode.getNumAppearances() + 1);
+              currNode.addPlaylistContainingArtist(2);
+            } else {
+              rankings.put(artist, new BuildingArtistRankNode(artist, 2, 2));
+            }
+          }
         }
       }
     }

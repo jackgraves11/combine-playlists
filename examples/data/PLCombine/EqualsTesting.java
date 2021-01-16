@@ -22,7 +22,9 @@ public class EqualsTesting {
     compareTwoPL PlaylistComparer = new compareTwoPL();
 
     /** Test that same playlist with itself returns every song */
-    ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(testTrackPLOne, testTrackPLOne);
+    ArrayList<Track> plOne = SharedMethods.getPLTracks(testTrackPLOne);
+    ArrayList<Track> plTwo = SharedMethods.getPLTracks(testTrackPLTwo);
+    ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(plOne, plTwo);
     assertEquals(sharedTracks.size(), 10);
 
     /**
@@ -32,7 +34,8 @@ public class EqualsTesting {
      * Franchise - Tests that Franchise linked from Travis equals Franchise linked from Thugs page
      * Liger - Tests that single vs album song is equal
      */
-    ArrayList<Track> sharedTracks2 = PlaylistComparer.getSharedTracks(testTrackPLOne, testTrackPLTwo);
+    ArrayList<Track> sharedTracks2 = PlaylistComparer.getSharedTracks(SharedMethods.getPLTracks(testTrackPLOne),
+      SharedMethods.getPLTracks(testTrackPLTwo));
     assertEquals(sharedTracks2.size(), 4);
     PlaylistComparer.printTracks(sharedTracks2);
   }

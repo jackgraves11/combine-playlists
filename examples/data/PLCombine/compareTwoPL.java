@@ -18,13 +18,11 @@ public class compareTwoPL {
 
   /**
    * Finds and returns the shared tracks of two inputted playlists.
-   * @param pLIDOne Playlist ID of first playlist
-   * @param pLIDTwo Playlist ID of second playlist
+   * @param firstPlaylist ArrayList of tracks of first playlist
+   * @param secondPlaylist ArrayList of tracks of second playlist
    * @return ArrayList of Track instances of the tracks that are in both playlists
    */
-  public ArrayList<Track> getSharedTracks(String pLIDOne, String pLIDTwo) {
-    ArrayList<Track> firstPlaylist = sharedMethods.getPLTracks(pLIDOne);
-    ArrayList<Track> secondPlaylist = sharedMethods.getPLTracks(pLIDTwo);
+  public ArrayList<Track> getSharedTracks(ArrayList<Track> firstPlaylist, ArrayList<Track> secondPlaylist) {
     ArrayList<Track> combinedPlaylist = new ArrayList<>();
     for (Track t : firstPlaylist) {
       if (t != null){
