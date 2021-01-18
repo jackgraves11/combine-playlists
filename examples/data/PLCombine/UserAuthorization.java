@@ -20,6 +20,11 @@ import org.slf4j.LoggerFactory;
 
 import static data.PLCombine.Main.spotifyApi;
 
+/**
+ * Class that gets a user to log in with their spotify account.
+ * TODO Figure out this
+ */
+
 public class UserAuthorization {
 /**
   public static void authorizeUser() throws Exception {

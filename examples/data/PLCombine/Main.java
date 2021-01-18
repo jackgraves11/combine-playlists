@@ -4,10 +4,6 @@ import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.model_objects.specification.Track;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Set;
@@ -27,8 +23,6 @@ public class Main {
 
   /** Where the website would redirect to (essentially website homepage) */
   public static final URI redirectUri = SpotifyHttpManager.makeUri("https://example.com/spotify-redirect");
-
-  public static final SharedMethods sharedMethods = new SharedMethods();
 
   /** Playlist IDs: */
   public static final String rapCaviarID = "37i9dQZF1DX0XUsuxWHRQd";
@@ -51,8 +45,8 @@ public class Main {
   public static void main(String[] args) throws Exception {
     //UserAuthorization.authorizeUser();
     ClientCredentials.clientCredentials_Sync();
-    compareTwoPL PlaylistComparer = new compareTwoPL();
     /**
+    compareTwoPL PlaylistComparer = new compareTwoPL();
     ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(jackID, grayID);
     PlaylistArtistsAnalyzer pAA = new PlaylistArtistsAnalyzer(sharedTracks);
     PlaylistArtistsAnalyzer.SimpleArtistFreqNode[] topArtists = pAA.topArtists();

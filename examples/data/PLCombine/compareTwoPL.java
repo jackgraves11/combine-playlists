@@ -1,17 +1,12 @@
 package data.PLCombine;
 
-import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.*;
-import com.wrapper.spotify.requests.data.playlists.GetPlaylistsItemsRequest;
-import org.apache.hc.core5.http.ParseException;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import static data.PLCombine.Main.*;
 
 /**
  * Class that compares two different playlists.
+ * TODO Pretty excessive to have this in its own class, probably just add to sharedMethods.
  */
 
 public class compareTwoPL {

@@ -5,13 +5,23 @@ import com.wrapper.spotify.model_objects.specification.Track;
 
 import java.util.*;
 
+/**
+ * Old class that scans a playlist and counts the number of tracks each artist in the playlist
+ * is on.
+ */
+
 public class PlaylistArtistsAnalyzer {
+
   ArrayList<Track> playlist;
 
   public PlaylistArtistsAnalyzer(ArrayList<Track> playlist) {
     this.playlist = playlist;
   }
 
+  /**
+   * Node that stores an artist and the number of songs the artist appears on
+   * in the playlist (frequency).
+   */
   public class SimpleArtistFreqNode implements Comparable<SimpleArtistFreqNode> {
     ArtistSimplified artist;
     int frequency;
@@ -43,6 +53,12 @@ public class PlaylistArtistsAnalyzer {
     }
   }
 
+  /**
+   * Scans the playlist and finds out how songs each artist is on.
+   * @return An array sorted of artists and how many songs they are on.
+   * The array is sorted so that the artist on the most tracks is first
+   * and the artist on the least number of tracks is last.
+   */
   public SimpleArtistFreqNode[] topArtists() {
     HashMap<ArtistSimplified, Integer> map = new HashMap<>();
     for (Track t : playlist) {
@@ -62,13 +78,12 @@ public class PlaylistArtistsAnalyzer {
       index += 1;
     }
     Arrays.sort(result, Collections.reverseOrder());
-    for (int i = 0; i < result.length; i += 1) {
-      System.out.print(result[i].getArtist().getName() + ": ");
-      System.out.println(result[i].getFrequency());
-    }
     return result;
   }
 
+  /**
+   * Prints all of the tracks of a given artist that are in the playlist.
+   */
   public void printArtistsTracks(ArtistSimplified artist) {
     for (Track track : playlist) {
       ArtistSimplified[] artists = track.getArtists();
@@ -77,14 +92,6 @@ public class PlaylistArtistsAnalyzer {
           System.out.println(track.getName());
         }
       }
-    }
-  }
-
-  private void printMap(Map<String, Integer> map) {
-    Set<String> artists = map.keySet();
-    for (String artist : artists) {
-      System.out.print(artist + ": ");
-      System.out.println(map.get(artist));
     }
   }
 }

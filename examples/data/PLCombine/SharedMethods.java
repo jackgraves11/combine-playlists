@@ -8,9 +8,13 @@ import com.wrapper.spotify.requests.data.playlists.GetPlaylistsItemsRequest;
 import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 import static data.PLCombine.Main.spotifyApi;
+
+/**
+ * Class that holds methods that classes across the program may use.
+ */
 
 public class SharedMethods {
 
@@ -60,5 +64,34 @@ public class SharedMethods {
       System.out.println("Error: " + e.getMessage());
     }
     return allTracks;
+  }
+
+  /**
+   * Returns a random track from a set of tracks.
+   * @param setOfTracks Set of tracks that you want a random track to be picked from.
+   * @return Random track from the set.
+   */
+  public static Track getRandomTrack(Set<Track> setOfTracks) {
+    Random r = new Random();
+    int index = r.nextInt(setOfTracks.size());
+    Iterator<Track> iter = setOfTracks.iterator();
+    for (int i = 0; i < setOfTracks.size(); i += 1) {
+      Track track = iter.next();
+      if (i == index) {
+        return track;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Returns a random track from a set of tracks.
+   * @param listOfTracks Set of tracks that you want a random track to be picked from.
+   * @return Random track from the set.
+   */
+  public static Track getRandomTrack(ArrayList<Track> listOfTracks) {
+    Random r = new Random();
+    int index = r.nextInt(listOfTracks.size());
+    return listOfTracks.get(index);
   }
 }
