@@ -43,6 +43,27 @@ public class Artist extends AbstractModelObject implements IArtistTrackModelObje
   }
 
   /**
+   * @author Jack Graves
+   * Basing hashCode and equals off of id.
+   */
+  @Override
+  public int hashCode() {
+    return this.getId().hashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!this.getClass().equals(obj.getClass())) {
+      return false;
+    }
+    Artist otherArtist = (Artist) obj;
+    if (this.getId() == null || otherArtist.getId() == null) {
+      return false;
+    }
+    return this.getId().equals(otherArtist.getId());
+  }
+
+  /**
    * Get the external URLs of the artist. <br>
    * Example: <a href="https://developer.spotify.com/web-api/user-guide/#spotify-uris-and-ids">Spotify-URL</a>
    *

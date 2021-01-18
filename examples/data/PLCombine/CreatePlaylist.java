@@ -55,7 +55,7 @@ public class CreatePlaylist {
         addArtistsTracks(currArtist, pLTwo, currArtistsTracks);
         for (int i = 0; i < 5; i += 1) {
           finalPlaylist.add(SharedMethods.getRandomTrack(currArtistsTracks));
-          if (finalPlaylist.size() > numSongsDesired) {
+          if (finalPlaylist.size() == numSongsDesired) {
             break;
           }
         }

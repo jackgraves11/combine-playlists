@@ -60,6 +60,30 @@ public class Album extends AbstractModelObject {
   }
 
   /**
+   * @author Jack Graves
+   * Basing hashcode and equals off of Artist ID.
+   */
+  @Override
+  public int hashCode() {
+    return this.getId().hashCode();
+  }
+
+  /**
+   * @author Jack Graves
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (!this.getClass().equals(obj.getClass())) {
+      return false;
+    }
+    AlbumSimplified otherAlbum = (AlbumSimplified) obj;
+    if (this.getId() == null || otherAlbum.getId() == null) {
+      return false;
+    }
+    return this.getId().equals(otherAlbum.getId());
+  }
+
+  /**
    * Get the type of the album.
    *
    * @return The {@link AlbumType}.
