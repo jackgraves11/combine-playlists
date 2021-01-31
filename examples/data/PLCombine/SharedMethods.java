@@ -85,6 +85,26 @@ public class SharedMethods {
   }
 
   /**
+   * Removes a random track and returns it. If there are no tracks left in the set it
+   * returns null.
+   * @param setOfTracks Set of tracks that you want a random track to be picked from.
+   * @return Random track from the set.
+   */
+  public static Track removeRandomTrack(Set<Track> setOfTracks) {
+    Random r = new Random();
+    int index = r.nextInt(setOfTracks.size());
+    Iterator<Track> iter = setOfTracks.iterator();
+    for (int i = 0; i < setOfTracks.size(); i += 1) {
+      Track track = iter.next();
+      if (i == index) {
+        setOfTracks.remove(track);
+        return track;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Returns a random track from a set of tracks.
    * @param listOfTracks Set of tracks that you want a random track to be picked from.
    * @return Random track from the set.
@@ -93,5 +113,25 @@ public class SharedMethods {
     Random r = new Random();
     int index = r.nextInt(listOfTracks.size());
     return listOfTracks.get(index);
+  }
+
+  /**
+   * Removes a random track and returns it. If there are no tracks left in the ArrayList it
+   * returns null.
+   * @param tracks ArrayList of tracks that you want a random track to be picked from.
+   * @return Random track from the ArrayList.
+   */
+  public static Track removeRandomTrack(ArrayList<Track> tracks) {
+    Random r = new Random();
+    int index = r.nextInt(tracks.size());
+    Iterator<Track> iter = tracks.iterator();
+    for (int i = 0; i < tracks.size(); i += 1) {
+      Track track = iter.next();
+      if (i == index) {
+        tracks.remove(track);
+        return track;
+      }
+    }
+    return null;
   }
 }

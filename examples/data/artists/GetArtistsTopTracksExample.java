@@ -13,9 +13,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 public class GetArtistsTopTracksExample {
-  private static final String accessToken = "taHZ2SdB-bPA3FsK3D7ZN5npZS47cMy-IEySVEGttOhXmqaVAIo0ESvTCLjLBifhHOHOIuhFUKPW1WMDP7w6dj3MAZdWT8CLI2MkZaXbYLTeoDvXesf2eeiLYPBGdx8tIwQJKgV8XdnzH_DONk";
-  private static final String id = "0LcJLqbBmaGUft1e9Mm8HV";
-  private static final CountryCode countryCode = CountryCode.SE;
+  private static final String accessToken = "BQCMWlGSGW4cOPm4cjRNXQYS-cynBaNZA-ok8od7DaLPDtwi1XSh3u_dhhQAgOWMhFKWWyHKiyAoLvy-y4v7AkduST-YRPC2UH1SvEQPP2sA4Lt7lxEZ6mQN9uYlNYMtxFWxSKaQwNDlTVh0-0RBlfbulAOCTqA4IeTNz8tZeZY-ImV6nMPVSIQ";
+  private static final String id = "0Y5tJX1MQlPlqiwlOH1tJY";
+  private static final CountryCode countryCode = CountryCode.US;
 
   private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
     .setAccessToken(accessToken)
@@ -29,6 +29,9 @@ public class GetArtistsTopTracksExample {
       final Track[] tracks = getArtistsTopTracksRequest.execute();
 
       System.out.println("Length: " + tracks.length);
+      for (Track track : tracks) {
+        System.out.println(track.getName());
+      }
     } catch (IOException | SpotifyWebApiException | ParseException e) {
       System.out.println("Error: " + e.getMessage());
     }
@@ -53,6 +56,6 @@ public class GetArtistsTopTracksExample {
 
   public static void main(String[] args) {
     getArtistsTopTracks_Sync();
-    getArtistsTopTracks_Async();
+    //getArtistsTopTracks_Async();
   }
 }

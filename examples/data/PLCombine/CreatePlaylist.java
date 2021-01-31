@@ -2,6 +2,7 @@ package data.PLCombine;
 
 import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
 import com.wrapper.spotify.model_objects.specification.Track;
+import com.wrapper.spotify.requests.data.artists.GetArtistsTopTracksRequest;
 
 import java.util.*;
 
@@ -47,19 +48,34 @@ public class CreatePlaylist {
     if (finalPlaylist.size() < numSongsDesired) {
       ArtistRanker artistRanker = new ArtistRanker();
       ArrayList<ArtistRanker.SimpleArtistScoreNode> ranks = artistRanker.artistRanks(pLOne, pLTwo);
+      HashSet<Track> allSharedArtistTracks = new HashSet<>();
       int currentRankIndex = 0;
       while (finalPlaylist.size() < numSongsDesired) {
-        ArtistSimplified currArtist = ranks.get(currentRankIndex).getArtist();
-        Set<Track> currArtistsTracks = new HashSet<>();
-        addArtistsTracks(currArtist, pLOne, currArtistsTracks);
-        addArtistsTracks(currArtist, pLTwo, currArtistsTracks);
-        for (int i = 0; i < 5; i += 1) {
-          finalPlaylist.add(SharedMethods.getRandomTrack(currArtistsTracks));
-          if (finalPlaylist.size() == numSongsDesired) {
-            break;
+        if (currentRankIndex < ranks.size()) {
+          ArtistSimplified currArtist = ranks.get(currentRankIndex).getArtist();
+          Set<Track> currArtistsTracks = new HashSet<>();
+          addArtistsTracks(currArtist, pLOne, currArtistsTracks);
+          addArtistsTracks(currArtist, pLTwo, currArtistsTracks);
+          for (int i = 0; i < 5; i += 1) {
+            Track track = SharedMethods.removeRandomTrack(currArtistsTracks);
+            if (track != null) {
+              finalPlaylist.add(track);
+            } else {
+              break;
+            }
+            if (finalPlaylist.size() == numSongsDesired || currArtistsTracks.size() == 0) {
+              break;
+            }
           }
+          if (currArtistsTracks.size() > 0) {
+            allSharedArtistTracks.addAll(currArtistsTracks);
+          }
+          currentRankIndex += 1;
+        } else if (allSharedArtistTracks.size() > 0){
+          finalPlaylist.add(SharedMethods.removeRandomTrack(allSharedArtistTracks));
+        } else {
+          addTopArtistTracks(ranks, finalPlaylist, numSongsDesired);
         }
-        currentRankIndex += 1;
       }
     }
   }
@@ -80,6 +96,26 @@ public class CreatePlaylist {
           setToAddTracksTo.add(track);
         }
       }
+    }
+  }
+
+  private void addTopArtistTracks(ArrayList<ArtistRanker.SimpleArtistScoreNode> ranks,
+                                  Set<Track> finalPlaylist, int numSongsDesired) {
+    int currArtist = 0;
+    GetArtistTopTracks getArtistTopTracks = new GetArtistTopTracks();
+    while (finalPlaylist.size() < numSongsDesired && currArtist < ranks.size()) {
+      Track[] artistTracks = getArtistTopTracks.getTopTracks(ranks.get(currArtist).getArtist());
+      ArrayList<Track> currTracks = new ArrayList<>();
+      for (Track track : artistTracks) {
+        currTracks.add(track);
+      }
+      while (currTracks.size() > 0) {
+        finalPlaylist.add(SharedMethods.removeRandomTrack(currTracks));
+        if (finalPlaylist.size() == numSongsDesired) {
+          return;
+        }
+      }
+      currArtist += 1;
     }
   }
 }

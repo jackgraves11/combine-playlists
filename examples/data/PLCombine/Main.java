@@ -43,28 +43,23 @@ public class Main {
     .build();
 
   public static void main(String[] args) throws Exception {
-    //UserAuthorization.authorizeUser();
-    ClientCredentials.clientCredentials_Sync();
-    /**
-    compareTwoPL PlaylistComparer = new compareTwoPL();
-    ArrayList<Track> sharedTracks = PlaylistComparer.getSharedTracks(jackID, grayID);
-    PlaylistArtistsAnalyzer pAA = new PlaylistArtistsAnalyzer(sharedTracks);
-    PlaylistArtistsAnalyzer.SimpleArtistFreqNode[] topArtists = pAA.topArtists();
-    pAA.printArtistsTracks(topArtists[0].getArtist());
-    ArrayList<Track> jackPL = getPLTracks(jackID);
-    ArrayList<Track> grayPL = getPLTracks(grayID);
-    ArtistRanker artistRanker = new ArtistRanker();
-    ArrayList<ArtistRanker.SimpleArtistScoreNode> scores = artistRanker.artistRanks(jackPL, grayPL);
-    for (ArtistRanker.SimpleArtistScoreNode node : scores) {
-      System.out.print(node.getArtist().getName() + ": ");
-      System.out.println(node.getScore());
-    }
-     */
+    //ClientCredentials.clientCredentials_Sync();
+    UserAuthorization userAuthorization = new UserAuthorization();
+    userAuthorization.execute();
+    String accessToken = spotifyApi.getAccessToken();
+    String userID = "31yhmkso6gm2zfjteputdsjbbrem";
     CreatePlaylist createPlaylist = new CreatePlaylist();
-    Set<Track> playlist = createPlaylist.getPlaylist(jackID, grayID, 200);
+    Set<Track> playlist = createPlaylist.getPlaylist(jackID, grayID, 1000);
+    System.out.println(playlist.size());
+    int i = 0;
     for (Track track : playlist) {
-      System.out.println(track.getName());
+      if (i == 93) {
+        System.out.println(track.getName());
+      }
+      i += 1;
     }
+    AddPlaylistToUserLib addPlaylistToUserLib = new AddPlaylistToUserLib();
+    addPlaylistToUserLib.execute(accessToken, userID, playlist, "It's Necessary");
     //Waiter waiter = new Waiter();
     //waiter.main();
     //PlaylistComparer.printTracks(sharedTracks);

@@ -1,24 +1,15 @@
 package data.PLCombine;
 
-import com.google.gson.JsonObject;
+import com.wrapper.spotify.exceptions.SpotifyWebApiException;
+import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
+import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.*;
-
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import org.apache.hc.core5.http.ParseException;
 import static data.PLCombine.Main.spotifyApi;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.Scanner;
 
 /**
  * Class that gets a user to log in with their spotify account.
@@ -26,48 +17,24 @@ import static data.PLCombine.Main.spotifyApi;
  */
 
 public class UserAuthorization {
-/**
-  public static void authorizeUser() throws Exception {
+
+  public void execute() {
     AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
-//      .state("x4xkmn9pu3j6ukrs8n")
-//          .scope("user-read-birthdate,user-read-email")
-//          .show_dialog(true)
+      .scope("playlist-modify-public")
       .build();
-
     URI uri = authorizationCodeUriRequest.execute();
-    waitForResponse(uri.toString(), "Hello", 10000);
-    //getAccessToken(uri);
-
-    //System.out.println("URI: " + uri.toString());
-  }
-
-  private static void getAccessToken(URI uri) throws Exception {
-    String url = uri.toString();
-    URL obj = uri.toURL();
-    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-    con.setRequestMethod("GET");
-    int responseCode = con.getResponseCode();
-    System.out.println("\nSending Get Request to URL: " + url);
-    System.out.println("Response Code: " + responseCode);
-    BufferedReader in = new BufferedReader(
-      new InputStreamReader(con.getInputStream())
-    );
-    String inputLine;
-    StringBuffer response = new StringBuffer();
-    while ((inputLine = in.readLine()) != null) {
-      response.append(inputLine);
+    System.out.println(uri.toString());
+    Scanner myObj = new Scanner(System.in);
+    System.out.println("Enter code: ");
+    String code = myObj.nextLine();
+    AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code)
+      .build();
+    try {
+      AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
+      spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
+      spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
+    } catch (IOException | SpotifyWebApiException | ParseException e) {
+      System.out.println("Error: " + e.getMessage());
     }
-    in.close();
-    //print in String
-    System.out.println(response.toString());
-    AuthorizationCode
   }
- */
-
-
-
-
-
-
-
 }

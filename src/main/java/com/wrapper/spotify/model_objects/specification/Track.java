@@ -326,11 +326,11 @@ public class Track extends AbstractModelObject implements IArtistTrackModelObjec
 
   /**
    * @author Jack Graves
-   * Has to base hashCode off of ID.
+   * Basing the hashcode off of first letter of the name. Could change this later.
    */
   @Override
   public int hashCode() {
-    return this.getId().hashCode();
+    return Character.valueOf(this.getName().charAt(0)).hashCode();
   }
 
   @Override
