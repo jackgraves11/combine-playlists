@@ -47,7 +47,7 @@ public class Main {
     UserAuthorization userAuthorization = new UserAuthorization();
     userAuthorization.execute();
     String accessToken = spotifyApi.getAccessToken();
-    String userID = "31yhmkso6gm2zfjteputdsjbbrem";
+    String userID = "31yhmkso6gm2zfjteputdsjbbrem"; //Jack's User ID
     CreatePlaylist createPlaylist = new CreatePlaylist();
     Set<Track> playlist = createPlaylist.getPlaylist(jackID, grayID, 1000);
     System.out.println(playlist.size());
